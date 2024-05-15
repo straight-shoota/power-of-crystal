@@ -93,9 +93,11 @@
       <section>
         <div>
           <h2>Benefits of Ruby</h2>
-          <p>user-friendly syntax</p>
-          <p>versatile and productive</p>
-          <p>simple and intuitive</p>
+          <ul>
+            <li>user-friendly syntax</li>
+            <li>versatile and productive</li>
+            <li>simple and intuitive</li>
+          </ul>
         </div>
 
         <aside class="notes">
@@ -143,10 +145,12 @@
       <section>
         <div>
           <h2>Ruby Drawbacks</h2>
-          <p>type checking</p>
-          <p>raw performance</p>
-          <p>software distribution</p>
-          <p>concurrency</p>
+          <ul>
+          <li>type checking</li>
+          <li>raw performance</li>
+          <li>software distribution</li>
+          <li>concurrency</li>
+        </ul>
         </div>
 
         <aside class="notes">
@@ -165,10 +169,12 @@
 
       <section>
         <h2>Crystal's answers</h2>
-        <p>goodies from Ruby's lineage +</p>
-        <p>static typing with type inference +</p>
-        <p>compiles to highly efficient machine code +</p>
-        <p>strong, intuitive concurrency model</p>
+        <ul>
+          <li>goodies from Ruby's lineage</li>
+          <li>static typing with type inference</li>
+          <li>compiles to highly efficient machine code</li>
+          <li>strong, intuitive concurrency model</li>
+        </ul>
 
         <aside class="notes">
           <p>Crystal takes the best from Ruby and adds some more</p>
@@ -346,9 +352,11 @@ Hello, World!
 
       <section>
         <h2>Compilation</h2>
-        <p>runtime is embedded into the binary</p>
-        <p>LLVM backend generates efficient code</p>
-        <p>limited dynamic language features</p>
+        <ul>
+          <li>runtime is embedded into the binary</li>
+          <li>LLVM backend generates efficient code</li>
+          <li>limited dynamic language features</li>
+        </ul>
         <aside class="notes">
           <ul>
             <li>Extra step, takes some time, but runtime efficiency pays off</li>
@@ -449,11 +457,13 @@ end
 
       <section>
         <h2>Concurrency</h2>
-        <p>lightweight threads, CSP-style</p>
-        <p><code>spawn foo()</code> launches a <code>Fiber</code></p>
-        <p>deeply integrated into the runtime</p>
-        <p><code>socket.puts "ping"</code></p>
-        <p>communication via <code>Channel</code></p>
+        <ul>
+          <li>lightweight threads, CSP-style</li>
+          <li><code>spawn foo()</code> launches a <code>Fiber</code></li>
+          <li>deeply integrated into the runtime</li>
+          <li><code>socket.puts "ping"</code></li>
+          <li>communication via <code>Channel</code></li>
+        </ul>
 
         <aside class="notes">
           <ul>
@@ -470,16 +480,16 @@ end
       <section>
         <h2>API gotchas</h2>
 
-        <p><code>#includes?</code> instead of <code>#include?</code></p>
+        <ul>
+          <li><code>#includes?</code> instead of <code>#include?</code></li>
 
-        <div class="fragment">
-          <p>only <code>#reduce</code>, no <code>#inject</code></p>
-          <p>only <code>#size</code>, no <code>#length</code></p>
-        </div>
+          <li class="fragment" data-fragment-index="1">only <code>#reduce</code>, no <code>#inject</code></li>
+          <li class="fragment" data-fragment-index="1">only <code>#size</code>, no <code>#length</code></li>
 
         <!--div class="fragment">
           <p><code>Time.utc</code>/<code>Time.local</code> instead of <code>Time.now</code></p>
         </div-->
+        </ul>
 
         <aside class="notes">
           <p>Overall, the standard library has very many similarities</p>
@@ -576,9 +586,11 @@ end
 
       <section>
         <h2>Combine Ruby &amp; Crystal</h2>
-        <p>delegate performance-critical workloads to crystal</p>
-        <p>background job processor</p>
-        <p>service backend</p>
+        <ul>
+          <li>delegate performance-critical workloads</li>
+          <li>background job processing</li>
+          <li>service backend</li>
+        </ul>
 
         <aside class="notes">
           <p>Other forms of collaboration</p>
@@ -588,41 +600,47 @@ end
         </aside>
       </section>
 
-      <section data-auto-animate>
+      <section>
         <h2>Learnings for Rubyists</h2>
         <p><em>How Crystal makes you a better Ruby developer</em></p>
 
-        <div class="r-stack">
-          <div class="fragment fade-in-then-out">
-            <p>avoid repeat calculations:</p>
-            <pre><code class="language-crystal" data-trim>if foo.bar
-      do_something(foo.bar)
-            </code></pre>
-            <pre><code class="language-crystal" data-trim>if bar = foo.bar
-      do_something(bar)
-            </code></pre>
-          </div>
-          <div class="fragment fade-in-then-out">
-            <p>prefer types for structured data over ad-hoc hashes</p>
-            <p>more efficient, explicitly structured, allows documentation</p>
-          </div>
-        </div>
+        <p>avoid repeat calculations:</p>
+        <pre><code class="language-crystal" data-trim>if foo.bar
+  do_something(foo.bar)
+        </code></pre>
+        <pre><code class="language-crystal" data-trim>if bar = foo.bar
+  do_something(bar)
+        </code></pre>
       </section>
 
       <section>
-        <p><a href="https://crystal-lang.org/reference/1.12/tutorials/basics/index.html">Language introduction tutorial</a></p>
-        <p><a href="https://www.crystalforrubyists.com/">Crystal for Rubyists</a></p>
-        <p><a href="https://crystal-lang.org/reference/1.12/crystal_for_rubyists/index.html">Crystal for Rubyists</a></p>
-        <p><a href="https://github.com/crystal-lang/crystal/wiki/Crystal-Shards-for-Ruby-Gems">Crystal-Shards-for-Ruby-Gems</a></p>
-        <p><a href="https://exercism.org/tracks/Crystal">Excercism Track</a></p>
+        <h2>Learnings for Rubyists</h2>
+        <p><em>How Crystal makes you a better Ruby developer</em></p>
+        <ul>
+          <li>prefer shaped types for structured data over shapeless hashes</li>
+          <li>more efficient, explicitly structured, allows documentation</li>
+          <li>for static key names, use a type</li>
+        </ul>
       </section>
 
       <section>
-        <h2>Conclusio</h2>
-        <p>Crystal can be a useful asset in your toolbox</p>
-        <p>enhance or replace Ruby and/or other languages (to keep closer to Ruby)</p>
-        <p>Knowing Ruby makes you already a Crystal developer</p>
-        <p>Knowing Crystal makes you a better Ruby developer</p>
+        <ul>
+          <li><a href="https://crystal-lang.org/reference/1.12/tutorials/basics/index.html">Language introduction tutorial</a></li>
+          <li><a href="https://www.crystalforrubyists.com/">Crystal for Rubyists</a></li>
+          <li><a href="https://crystal-lang.org/reference/1.12/crystal_for_rubyists/index.html">Crystal for Rubyists</a></li>
+          <li><a href="https://github.com/crystal-lang/crystal/wiki/Crystal-Shards-for-Ruby-Gems">Crystal-Shards-for-Ruby-Gems</a></li>
+          <li><a href="https://exercism.org/tracks/Crystal">Excercism Track</a></li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Conclusion</h2>
+        <ul>
+          <li>Crystal can be a useful asset in your toolbox</li>
+          <li>enhance or replace Ruby and/or other languages (to keep closer to Ruby)</li>
+          <li>Knowing Ruby makes you already a Crystal developer</li>
+          <li>Knowing Crystal makes you a better Ruby developer</li>
+        </ul>
       </section>
 
       <section>
