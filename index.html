@@ -601,26 +601,35 @@ end
           <p>Other forms of collaboration</p>
           <p>let Crystal handle performance-critical jobs</p>
           <p>bg-jobs via sidekiq adapter etc.</p>
-          <p></p>
+          <p>e.g. websocket server, streaming server</p>
         </aside>
       </section>
 
       <section>
         <h2>Learnings for Rubyists</h2>
-        <p><em>How Crystal makes you a better Ruby developer</em></p>
 
-        <p>avoid repeat calculations:</p>
-        <pre><code class="language-crystal" data-trim>if foo.bar
-  do_something(foo.bar)
-        </code></pre>
-        <pre><code class="language-crystal" data-trim>if bar = foo.bar
-  do_something(bar)
-        </code></pre>
+        <p>avoiding repeat calculations</p>
+        <pre><code class="language-crystal">abstract def bar : String | Nil
+abstract def foo(arg : String)
+</code></pre>
+        <pre><code class="language-crystal" data-trim>if bar
+  foo(bar) # Error: expected argument #1 to 'foo'
+           # to be String, not (String | Nil)
+end
+</code></pre>
+        <pre class="fragment"><code class="language-crystal" data-trim>
+if b = bar
+  foo(b)
+end
+</code></pre>
+
+        <aside class="notes">
+          <p><em>How Crystal makes you a better Ruby developer</em></p>
+        </aside>
       </section>
 
       <section>
         <h2>Learnings for Rubyists</h2>
-        <p><em>How Crystal makes you a better Ruby developer</em></p>
         <ul>
           <li>prefer shaped types for structured data over shapeless hashes</li>
           <li>more efficient, explicitly structured, allows documentation</li>
