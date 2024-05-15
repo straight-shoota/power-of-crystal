@@ -48,7 +48,7 @@
       <section data-background-color="black">
         <img src="assets/qrcode-url.svg" alt="qr code" style="float: right; background: white; width: 30%; aspect-ratio: 1;">
 
-        <p>Johannes Müller</p>
+        <p>Johannes Müller<br>Crystal Core Team</p>
 
         <p><a href="mailto:jmuller@manas.tech">jmuller@manas.tech</a></p>
         <p><a href="https://fosstodon.org/@straight-shoota">@straight-shoota</a></p>
@@ -210,6 +210,7 @@ Hello, Crystal!
       <section data-auto-animate>
         <h2>Static Typing</h2>
         <p>formal verification</p>
+        <p>feels dynamic</p>
         <pre data-id="code-animation"><code class="language-crystal">def add(a, b)
   a + b
 end
@@ -220,8 +221,10 @@ add "foo", "bar" => "foobar"</code></pre>
         <aside class="notes">
           <ul>
             <li>formal verification</li>
-            <li>statically typed, but feels dynamic (like Ruby; type inference, union types, generics)</li>
+            <li>statically typed, but feels dynamic through type inference</li>
+            <li>Compiler realizes there are two instantiations of `#add`, one with both parameters being integers, one with both being string</li>
             <li>explicit typing is rarely necessary and in most places automatically inferred</li>
+            <li>Note: We <em>could</em> add type information, and it's often helpful to establish invariants and document expectations</li>
           </ul>
         </aside>
       </section>
@@ -229,6 +232,7 @@ add "foo", "bar" => "foobar"</code></pre>
       <section data-auto-animate>
         <h2>Static Typing</h2>
         <p>formal verification</p>
+        <p>feels dynamic</p>
         <pre data-id="code-animation"><code class="language-crystal">def add(a, b)
   a + b
 end
@@ -240,7 +244,6 @@ add "foo", 2 # Error: instantiating 'add(String, Int32)
              # Error: expected argument #1 to 'String#+'
              # to be Char or String, not Int32
 </code></pre>
-        <p class="fragment">feels dynamic</p>
 
         <aside class="notes">
           <ul>
@@ -258,13 +261,11 @@ add "foo", 2 # Error: instantiating 'add(String, Int32)
 
 <pre data-id="code-animation2"><code class="language-crystal">ary = [1, 2, 3]
 
+ary.class # => Array(Int32)
+
 ary << "foo" # Error: expected argument #1 to 'Array(Int32)#<<'
              # to be Int32, not String
-
-ary.class # => Array(Int32)
 </code></pre>
-
-        <p>generic type: <code>Array(T)</code></p>
 
         <aside class="notes">
           <p>there is not a single <code>Array</code> but different versions of it with generic parameterization</p>
@@ -277,17 +278,44 @@ ary.class # => Array(Int32)
 
 <pre data-id="code-animation2"><code class="language-crystal">ary = [1, 2, 3] of Int32 | String
 
+ary.class # => Array(Int32 | String)
+
 ary << "foo"
 
-
-ary.class # => Array(Int32 | String)
 </code></pre>
 
-        <p>generic type: <code>Array(T)</code></p>
-
         <aside class="notes">
-          <p>there is not a single <code>Array</code> but different versions of it with generic parameterization</p>
-          <p></p>
+          <p>sometimes you need to put type information to help the compiler understand what you want</p>
+        </aside>
+      </section>
+
+      <section>
+        <h2>Static Typing</h2>
+
+        <pre><code class="language-crystal" data-trim>
+        [] # Error: for empty arrays use '[] of ElementType'
+
+        [] of String
+        # or
+        Array(String).new
+        </code></pre>
+
+      </section>
+
+      <section>
+        <h2>Static Typing</h2>
+        <p>instance variables</p>
+<pre><code class="language-crystal">class Foo
+  @bar = 123
+
+  def initialize(@baz : String)
+  end
+end
+</code></pre>
+        <aside class="notes">
+          <p>Instance variable need to be explicitly typed</p>
+          <p>sometimes the compiler can infer the type</p>
+          <p>If not, a type restriction is mandatory</p>
         </aside>
       </section>
 
@@ -331,18 +359,45 @@ Hello, World!
         </aside>
       </section>
 
-      <section>
-        <section>
-          <h2>Metaprogramming: <code>macro</code></h2>
-          <p>code that writes other code at compile time</p>
-          <div class="r-stack">
-<pre class="fragment fade-out"><code class="language-crystal">macro getter(var)
-  # body
+      <section data-auto-animate>
+        <h2>Metaprogramming: <code>macro</code></h2>
+        <p>code that writes other code at compile time</p>
+        <div class="r-stack">
+<pre class="fragment"><code class="language-crystal">macro getter(var)
+
+  # macro body
+
 end
 
 getter foo
 </code></pre>
-<pre class="fragment"><code class="language-crystal">macro getter(var)
+        </div>
+<div class="fragment">
+  <p>Macro expansion:</p>
+<pre><code class="language-crystal">
+  # macro body
+
+</code></pre>
+</div>
+
+        <aside class="notes">
+          <ul>
+            <li><code>macro</code> has same structure as <code>def</code>, just differen keyword</li>
+            <li>simplified example from stdlib</li>
+            <li>equivalent to `attr_reader`</li>
+            <li>Ruby approach modifies the program at runtime, which is not possible with a compiled program</li>
+            <li>compile time macros offer similar features. It’s code that writes other code. Looks similar to a liquid template.</li>
+            <li>there's also hooks like <code>macro inherited</code></li>
+          </ul>
+        </aside>
+      </section>
+
+      <section>
+        <section data-auto-animate>
+          <h2>Metaprogramming: <code>macro</code></h2>
+          <p>code that writes other code at compile time</p>
+          <div class="r-stack">
+<pre><code class="language-crystal">macro getter(var)
   def {{ var.id }}
     @{{ var.id }}
   end
@@ -351,7 +406,7 @@ end
 getter foo
 </code></pre>
           </div>
-  <div class="fragment">
+  <div>
     <p>Macro expansion:</p>
 <pre><code class="language-crystal">def foo
   @foo
@@ -390,31 +445,6 @@ end
 </code></pre>
           </div>
         </section>
-      </section>
-
-      <section>
-        <h2>Batteries included</h2>
-<pre><code class="language-crystal"># A very basic HTTP server
-require "http/server"
-
-server = HTTP::Server.new do |context|
-  context.response.content_type = "text/plain"
-  context.response.print "Hello, Crystal!"
-end
-
-address = server.bind_tcp(8080)
-puts "Listening on http://#{address}"
-
-server.listen
-</code></pre>
-
-        <aside class="notes">
-          <ul>
-            <li><code>http/server</code> is part of the standard library</li>
-            <li>requests are handled in individual fibers, enabling concurrency (not that useful if you just print hello Crystalm but imagine bigger)</li>
-            <li>the last call blocks until the process is terminated</li>
-          </ul>
-        </aside>
       </section>
 
       <section>
@@ -462,27 +492,30 @@ server.listen
       </section>
 
       <section>
-        <h2>Typing Needs</h2>
-        <p>instance variables</p>
-<pre><code class="language-crystal">class Foo
-  def initialize(@bar : String)
-  end
+        <h2>Batteries included</h2>
+<pre><code class="language-crystal"># A very basic HTTP server
+require "http/server"
+
+server = HTTP::Server.new do |context|
+  context.response.content_type = "text/plain"
+  context.response.print "Hello, Crystal!"
 end
+
+address = server.bind_tcp(8080)
+puts "Listening on http://#{address}"
+
+server.listen
 </code></pre>
-      </section>
 
-      <section>
-        <h2>Typing Needs</h2>
-        <div>
-          <p>Generic instantiations</p>
-<pre><code class="language-crystal" data-trim>["foo", "bar"]
-
-[] # Error: for empty arrays use '[] of ElementType'
-
-[] of String
-Array(String).new
-</code></pre>
-        </div>
+        <aside class="notes">
+          <ul>
+            <li>This could be a Ruby program, right? Just using some `HTTP` library</li>
+            <li><code>http/server</code> is part of Crystal's standard library</li>
+            <li>Crystal comes with a lot of useful tools out of the box</li>
+            <li>requests are handled in individual fibers, enabling concurrency (not that useful if you just print hello Crystalm but imagine bigger)</li>
+            <li>the last call blocks until the process is terminated</li>
+          </ul>
+        </aside>
       </section>
 
       <section>
