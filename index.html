@@ -1,0 +1,625 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+  <title>Power of Crystal: A language for humans and computers</title>
+
+  <link rel="stylesheet" href="dist/reset.css">
+  <link rel="stylesheet" href="dist/reveal.css">
+  <link rel="stylesheet" href="dist/theme/crystal.css">
+
+  <!-- Theme used for syntax highlighted code -->
+  <link rel="stylesheet" href="plugin/highlight/monokai.css">
+</head>
+
+<body>
+  <div class="reveal">
+    <div class="slides">
+      <section data-background-color="black" data-background-image="assets/pattern.svg">
+        <hgroup>
+          <h1>The Power of Crystal:<br /><span style="font-size: 80%">A language for humans and computers</span></h1>
+          <h2>Johannes Müller &ndash; Crystal Core Team / Manas.Tech</h2>
+        </hgroup>
+        <img src="assets/helvetic-crystal.svg" style="width: 2em; margin-top: 1em; filter: invert();" />
+      </section>
+
+      <section>
+        <h1>Agenda</h1>
+        <ul>
+          <li>Intro to Crystal</li>
+          <li>Comparison with Ruby</li>
+          <li>Combined Power</li>
+          <li>Learnings for Ruby devs</li>
+        </ul>
+        <aside class="notes">
+          <ul>
+            <li>Last point: In case you go out of this talk and feel like you never want to have anything to do with
+              Crystal,
+              there are some useful insights when looking at Ruby from a Crystal perspective which might help you become
+              a better Ruby programmer.
+            </li>
+          </ul>
+        </aside>
+      </section>
+
+      <section data-background-color="black">
+        <img src="assets/qrcode-url.svg" alt="qr code" style="float: right; background: white; width: 30%; aspect-ratio: 1;">
+
+        <p>Johannes Müller</p>
+
+        <p><a href="mailto:jmuller@manas.tech">jmuller@manas.tech</a></p>
+        <p><a href="https://fosstodon.org/@straight-shoota">@straight-shoota</a></p>
+
+        <p style="clear: right; text-align: right;">
+          Follow the slides<br />
+          <a href="https://straight-shoota.github.io/power-of-crystal/">straight-shoota.github.io/power-of-crystal</a>
+        </p>
+        <hr>
+        <p>
+          <a href="https://crystal-lang.org/install">crystal-lang.org/install</a> | <a href="https://play.crystal-lang.org">play.crystal-lang.org</a>
+        </p>
+
+        <aside class="notes">
+          <ul>
+            <li>When I learned Ruby, it was the first time I fell in love with a programming language (fun)</li>
+            <li>Later Crystal was the second time</li>
+            <li>in the lineage of Ruby it expanded on Ruby, adding some extra flavour that I find very attractive</li>
+            <li>Crystal was/is still young, so lots of stuff was missing and I started contributing (stdlib and compiler)
+            </li>
+            <li>Eventually became a Core Team member</li>
+            <li>now working on Crystal full time. I'm principal engineer of the Crystal team at Manas, the place were
+              Crystal was born and continues stewardship of the project.</li>
+          </ul>
+        </aside>
+      </section>
+
+      <section>
+        <h2>Manas</h2>
+        <a href="https://manas.tech/"><img src="assets/manas.svg" alt="Manas" style="width: 40%; aspect-ratio: 1;"></a>
+
+        <aside class="notes">
+          <ul>
+            <li>Manas is a software agency from Argentina with an international team</li>
+            <li>we use lots of different technologies</li>
+            <li>lot of love for Ruby (on Rails)</li>
+            <li>Ruby has some great properties:</li>
+          </ul>
+        </aside>
+      </section>
+
+      <section>
+        <div>
+          <h2>Benefits of Ruby</h2>
+          <p>user-friendly syntax</p>
+          <p>versatile and productive</p>
+          <p>simple and intuitive</p>
+        </div>
+
+        <aside class="notes">
+          <ul>
+            <li>I just picked some examples, I'm sure you can add more</li>
+            <li>These are a result of the creators vision.</li>
+          </ul>
+        </aside>
+      </section>
+
+      <section>
+        <div>
+          <p style="text-wrap: balance;">Matz (1993): <em>“What's does a really good programming language look
+              like?”</em></p>
+
+          <code class="language-crystal">puts <span class="hljs-string">"Hello, Ruby!"</span></code></pre>
+        </div>
+        <div class="fragment">
+          <hr>
+          <p style="text-wrap: balance;">Ary (2011): <em>“What if Matz's good programming language could
+              somehow statically compile?”</em></p>
+
+          <code class="language-crystal">puts <span class="hljs-string">"Hello, Crystal!"</span></code></pre>
+        </div>
+
+        <aside class="notes">
+          <ul>
+            <li>Matz (father of Ruby) realized his vision of “a good” programming language. Many people agree on
+              that and found it useful</li>
+            <li>approval rate is probably pretty high in this room here</li>
+            <li>Fellows at Manas loved it as well, but Ary (father of Crystal) wondered “what if we could somehow
+              statically compile Ruby?”
+            </li>
+            <li>Crystal was created as answer to that</li>
+            <li>Started as experiment. Compiler originally written in Ruby. Grew into language and ecosystem.</li>
+            <li>Matz is grandfather of Crystal</li>
+            <li>The reasons to change anything about Ruby is that it has some downsides</li>
+          </ul>
+          <a href="https://manas.tech/blog/2016/04/01/the-story-behind-crystal/">The story behind Crystal</a>
+          <a href="https://www.youtube.com/watch?v=KbFHbkY27no">Yukihiro "Matz" Matsumoto - Pushing boundaries | Crystal
+            1.0 Conference</a>
+        </aside>
+      </section>
+
+      <section>
+        <div>
+          <h2>Ruby Drawbacks</h2>
+          <p>type checking</p>
+          <p>raw performance</p>
+          <p>software distribution</p>
+          <p>concurrency</p>
+        </div>
+
+        <aside class="notes">
+          <ul>
+            <li>type checking is possible via RBS or Sorbet. But those are bolted on and limited; challenging with
+              compatibility and coherence of the ecosystem.
+            <li>Ruby 3 and JIT increased performance significantly.<br>But dynamic nature puts it still
+              on a different level of efficiency compared to native code.</li>
+            <li>Ruby requires the language runtime. It's hard to distribute software to non-developers.</li>
+            <li>Writing concurren software can be an adventure</li>
+            <li>Some examples. I'm sure there are more issues with Ruby.</li>
+            <li>A programming language is always a set of features and compromises</li>
+          </ul>
+        </aside>
+      </section>
+
+      <section>
+        <h2>Crystal's answers</h2>
+        <p>goodies from Ruby's lineage +</p>
+        <p>static typing with type inference +</p>
+        <p>compiles to highly efficient machine code +</p>
+        <p>strong, intuitive concurrency model</p>
+
+        <aside class="notes">
+          <p>Crystal takes the best from Ruby and adds some more</p>
+          <p>...</p>
+          <p>fresh approach to the underlying ideas of Ruby as a new but similar language.</p>
+          <p>somewhat similar to alternative Ruby implementations (JRuby, Rubinious, or mruby), but it goes a step
+            further</p>
+          <p>still very similar and largely identical to Ruby.</p>
+          <p>You can leverage your Ruby knowledge for Crystal.</p>
+          <p>Lets explore some commonalities and differences</p>
+        </aside>
+      </section>
+
+      <section>
+        <h2>Syntax</h2>
+        <div>
+          <pre><code class="language-crystal"># src/hello.crb
+
+# Polyglot program that is valid Ruby and Crystal
+# and can tell one from the other
+
+LANGUAGE = Array.to_s == "Array(T)" ? "Crystal" : "Ruby"
+
+puts "Hello, #{LANGUAGE}!"</code></pre>
+<pre class="fragment"><code class="language-console" style="white-space: pre-wrap;">$ ruby src/hello.crb
+Hello, Ruby!
+
+$ crystal src/hello.crb
+Hello, Crystal!
+</code></pre>
+        </div>
+        <aside class="notes">
+          <p>extremely similar</p>
+          <p>Detection uses a trick: `Array.to_s` returns `"Array(T)"` in Crystal. The `T` is a generic type argument and we'll come to that
+            later</p>
+        </aside>
+      </section>
+
+      <section data-auto-animate>
+        <h2>Static Typing</h2>
+        <p>formal verification</p>
+        <pre data-id="code-animation"><code class="language-crystal">def add(a, b)
+  a + b
+end
+
+add 1, 2 # => 3
+add "foo", "bar" => "foobar"</code></pre>
+
+        <aside class="notes">
+          <ul>
+            <li>formal verification</li>
+            <li>statically typed, but feels dynamic (like Ruby; type inference, union types, generics)</li>
+            <li>explicit typing is rarely necessary and in most places automatically inferred</li>
+          </ul>
+        </aside>
+      </section>
+
+      <section data-auto-animate>
+        <h2>Static Typing</h2>
+        <p>formal verification</p>
+        <pre data-id="code-animation"><code class="language-crystal">def add(a, b)
+  a + b
+end
+
+add 1, 2 # => 3
+add "foo", "bar" => "foobar"
+
+add "foo", 2 # Error: instantiating 'add(String, Int32)
+             # Error: expected argument #1 to 'String#+'
+             # to be Char or String, not Int32
+</code></pre>
+        <p class="fragment">feels dynamic</p>
+
+        <aside class="notes">
+          <ul>
+            <li>Ruby has a similar error, but it only appears when the code executes</li>
+            <li>In Crystal you get the error at compile time</li>
+            <li>Excludes a whole class of common errors in Ruby (like
+              <code>NoMethodError: undefined method for nil:NilClass</code>)</li>
+            <li>in Ruby you need to do extensive testing to lock this down</li>
+          </ul>
+        </aside>
+      </section>
+
+      <section data-auto-animate data-auto-animate-restart>
+        <h2>Static Typing</h2>
+
+<pre data-id="code-animation2"><code class="language-crystal">ary = [1, 2, 3]
+
+ary << "foo" # Error: expected argument #1 to 'Array(Int32)#<<'
+             # to be Int32, not String
+
+ary.class # => Array(Int32)
+</code></pre>
+
+        <p>generic type: <code>Array(T)</code></p>
+
+        <aside class="notes">
+          <p>there is not a single <code>Array</code> but different versions of it with generic parameterization</p>
+          <p></p>
+        </aside>
+      </section>
+
+      <section data-auto-animate>
+        <h2>Static Typing</h2>
+
+<pre data-id="code-animation2"><code class="language-crystal">ary = [1, 2, 3] of Int32 | String
+
+ary << "foo"
+
+
+ary.class # => Array(Int32 | String)
+</code></pre>
+
+        <p>generic type: <code>Array(T)</code></p>
+
+        <aside class="notes">
+          <p>there is not a single <code>Array</code> but different versions of it with generic parameterization</p>
+          <p></p>
+        </aside>
+      </section>
+
+      <section>
+        <h2>Compilation</h2>
+<pre><code class="language-console" style="white-space: pre-wrap;">$ crystal build src/hello-world.cr
+
+$ ls -sh hello-world
+1,9M hello-world
+
+$ file hello-world
+hello-world: ELF 64-bit LSB pie executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /home/linuxbrew/.linuxbrew/lib/ld.so, for GNU/Linux 3.2.0, with debug_info, not stripped
+
+$ ./hello-world
+Hello, World!
+</code></pre>
+
+        <aside class="notes">
+          <ul>
+            <li>Compile first</li>
+            <li>Result is a dynamically linked executable for my current system</li>
+            <li>link some shared system libraries but no Crystal code</li>
+            <li>distribution of binaries is easy, binaries include the language runtime (especially when linked statically)</li>
+            <li>cross compilation is also possible</li>
+          </ul>
+        </aside>
+      </section>
+
+      <section>
+        <h2>Compilation</h2>
+        <p>runtime is embedded into the binary</p>
+        <p>LLVM backend generates efficient code</p>
+        <p>limited dynamic language features</p>
+        <aside class="notes">
+          <ul>
+            <li>Extra step, takes some time, but runtime efficiency pays off</li>
+            <li>LLVM is used for codegen by other languages as well (Rust for example, or clang)</li>
+            <li>optimizations are sometimes ridiculously good</li>
+            <li>All code needs to be fixed at compile time. There’s no `eval` or `send`. Cannot modify program at runtime. Core feature of Ruby's dynamicness.</li>
+          </ul>
+        </aside>
+      </section>
+
+      <section>
+        <section>
+          <h2>Metaprogramming: <code>macro</code></h2>
+          <p>code that writes other code at compile time</p>
+          <div class="r-stack">
+<pre class="fragment fade-out"><code class="language-crystal">macro getter(var)
+  # body
+end
+
+getter foo
+</code></pre>
+<pre class="fragment"><code class="language-crystal">macro getter(var)
+  def {{ var.id }}
+    @{{ var.id }}
+  end
+end
+
+getter foo
+</code></pre>
+          </div>
+  <div class="fragment">
+    <p>Macro expansion:</p>
+<pre><code class="language-crystal">def foo
+  @foo
+end
+</code></pre>
+  </div>
+
+          <aside class="notes">
+            <ul>
+              <li><code>macro</code> has same structure as <code>def</code>, just differen keyword</li>
+              <li>simplified example from stdlib</li>
+              <li>equivalent to `attr_reader`</li>
+              <li>Ruby approach modifies the program at runtime, which is not possible with a compiled program</li>
+              <li>compile time macros offer similar features. It’s code that writes other code. Looks similar to a liquid template.</li>
+              <li>there's also hooks like <code>macro inherited</code></li>
+            </ul>
+          </aside>
+        </section>
+        <section>
+          <h2>Metaprogramming: <code>def</code></h2>
+<pre><code class="language-crystal">class Foo
+  def ==(other)
+    {% for ivar in @type.instance_vars %}
+      return false unless @{{ivar.id}} == other.@{{ivar.id}}
+    {% end %}
+    true
+  end
+end
+</code></pre>
+          <div class="fragment">
+            <p>Macro expansion:</p>
+<pre class="fragment"><code class="language-crystal"># macro expansion of method body with ivars @bar and @baz
+    return false unless @baz == other.@baz
+    return false unless @bar == other.@bar
+    true
+</code></pre>
+          </div>
+        </section>
+      </section>
+
+      <section>
+        <h2>Batteries included</h2>
+<pre><code class="language-crystal"># A very basic HTTP server
+require "http/server"
+
+server = HTTP::Server.new do |context|
+  context.response.content_type = "text/plain"
+  context.response.print "Hello, Crystal!"
+end
+
+address = server.bind_tcp(8080)
+puts "Listening on http://#{address}"
+
+server.listen
+</code></pre>
+
+        <aside class="notes">
+          <ul>
+            <li><code>http/server</code> is part of the standard library</li>
+            <li>requests are handled in individual fibers, enabling concurrency (not that useful if you just print hello Crystalm but imagine bigger)</li>
+            <li>the last call blocks until the process is terminated</li>
+          </ul>
+        </aside>
+      </section>
+
+      <section>
+        <h2>Concurrency</h2>
+        <p>lightweight threads, CSP-style</p>
+        <p><code>spawn foo()</code> launches a <code>Fiber</code></p>
+        <p>deeply integrated into the runtime</p>
+        <p><code>socket.puts "ping"</code></p>
+        <p>communication via <code>Channel</code></p>
+
+        <aside class="notes">
+          <ul>
+            <li>communicating sequential processes (used also by Elixir and Go)</li>
+            <li>all code is implicitly async</li>
+            <li>but no callback hell</li>
+            <li>basically every time you need to wait on something (like reading from a socket), the scheduler
+              just continues running another fiber and the current one wakes up when its ready to continue.</li>
+            <li>multi-threading is still experimental, but expected to be completed within the next couple of months</li>
+          </ul>
+        </aside>
+      </section>
+
+      <section>
+        <h2>API gotchas</h2>
+
+        <p><code>#includes?</code> instead of <code>#include?</code></p>
+
+        <div class="fragment">
+          <p>only <code>#reduce</code>, no <code>#inject</code></p>
+          <p>only <code>#size</code>, no <code>#length</code></p>
+        </div>
+
+        <!--div class="fragment">
+          <p><code>Time.utc</code>/<code>Time.local</code> instead of <code>Time.now</code></p>
+        </div-->
+
+        <aside class="notes">
+          <p>Overall, the standard library has very many similarities</p>
+          <p>but there are some explicit choices</p>
+          <p>better grammar</p>
+          <p>avoid aliases</p>
+          <p>Easier for newcomers</p>
+          <p>No need to learn two things when one suffices</p>
+        </aside>
+      </section>
+
+      <section>
+        <h2>Typing Needs</h2>
+        <p>instance variables</p>
+<pre><code class="language-crystal">class Foo
+  def initialize(@bar : String)
+  end
+end
+</code></pre>
+      </section>
+
+      <section>
+        <h2>Typing Needs</h2>
+        <div>
+          <p>Generic instantiations</p>
+<pre><code class="language-crystal" data-trim>["foo", "bar"]
+
+[] # Error: for empty arrays use '[] of ElementType'
+
+[] of String
+Array(String).new
+</code></pre>
+        </div>
+      </section>
+
+      <section>
+        <h2>Dependencies</h2>
+<pre><code class="language-crystal" data-trim># shard.yml
+name: my-first-crystal-app
+version: 1.0.0
+
+dependencies:
+  mysql:
+    github: crystal-lang/crystal-mysql
+    version: >=0.16.0
+</code></pre>
+<pre><code class="language-console" style="white-space: pre-wrap;">$ shards install
+$ shards update
+</code></pre>
+        <aside class="notes">
+          <p>Shards instead of gems</p>
+          <p>CLI similar to bundler</p>
+          <p>decentralized dependency resolution, no registry</p>
+          <p>dependencies point to repositories</p>
+        </aside>
+      </section>
+
+      <section>
+        <h2>Ruby with Crystal</h2>
+        <p>Embed Crystal code directly in Ruby</p>
+
+<pre><code class="language-ruby" data-trim>require 'crystalruby'
+
+module MyTestModule
+  # The below method will be replaced by a compiled Crystal version
+  # linked using FFI.
+  crystalize [a: :int, b: :int] => :int
+  def add(a, b)
+    a + b
+  end
+end
+
+# This method is run in Crystal, not Ruby!
+MyTestModule.add(1, 2) # => 3
+</code></pre>
+        <a href="https://github.com/wouterken/crystalruby">wouterken/crystalruby</a>
+      </section>
+
+      <section>
+        <h2>Crystal with Ruby</h2>
+        <p>mruby interpreter with simple bindings</p>
+
+        <pre><code class="language-crystal" data-trim>require "anyolite"
+
+Anyolite::RbInterpreter.create do |rb|
+  rb.execute_script_line(%[puts "Hello from Ruby"])
+end
+</code></pre>
+        <a href="https://github.com/Anyolite/anyolite">Anyolite/anyolite</a>
+        </section>
+
+      <section>
+        <h2>Combine Ruby &amp; Crystal</h2>
+        <p>delegate performance-critical workloads to crystal</p>
+        <p>background job processor</p>
+        <p>service backend</p>
+
+        <aside class="notes">
+          <p>Other forms of collaboration</p>
+          <p>let Crystal handle performance-critical jobs</p>
+          <p>bg-jobs via sidekiq adapter etc.</p>
+          <p></p>
+        </aside>
+      </section>
+
+      <section data-auto-animate>
+        <h2>Learnings for Rubyists</h2>
+        <p><em>How Crystal makes you a better Ruby developer</em></p>
+
+        <div class="r-stack">
+          <div class="fragment fade-in-then-out">
+            <p>avoid repeat calculations:</p>
+            <pre><code class="language-crystal" data-trim>if foo.bar
+      do_something(foo.bar)
+            </code></pre>
+            <pre><code class="language-crystal" data-trim>if bar = foo.bar
+      do_something(bar)
+            </code></pre>
+          </div>
+          <div class="fragment fade-in-then-out">
+            <p>prefer types for structured data over ad-hoc hashes</p>
+            <p>more efficient, explicitly structured, allows documentation</p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <p><a href="https://crystal-lang.org/reference/1.12/tutorials/basics/index.html">Language introduction tutorial</a></p>
+        <p><a href="https://www.crystalforrubyists.com/">Crystal for Rubyists</a></p>
+        <p><a href="https://crystal-lang.org/reference/1.12/crystal_for_rubyists/index.html">Crystal for Rubyists</a></p>
+        <p><a href="https://github.com/crystal-lang/crystal/wiki/Crystal-Shards-for-Ruby-Gems">Crystal-Shards-for-Ruby-Gems</a></p>
+        <p><a href="https://exercism.org/tracks/Crystal">Excercism Track</a></p>
+      </section>
+
+      <section>
+        <h2>Conclusio</h2>
+        <p>Crystal can be a useful asset in your toolbox</p>
+        <p>enhance or replace Ruby and/or other languages (to keep closer to Ruby)</p>
+        <p>Knowing Ruby makes you already a Crystal developer</p>
+        <p>Knowing Crystal makes you a better Ruby developer</p>
+      </section>
+
+      <section>
+        <p>It takes the fun, elegance and productiveness of Ruby and adds efficiency and type safety.</p>
+
+        <div class="fragment">
+          <p><code>crystal tool format</code></p>
+        </div>
+        <p>formatter is very basic, only cosmetic changes</p>
+        <p>Avoid irrelevant discussions about stylistic details</p>
+      </section>
+    </div>
+  </div>
+
+  <script src="dist/reveal.js"></script>
+  <script src="plugin/notes/notes.js"></script>
+  <script src="plugin/markdown/markdown.js"></script>
+  <script src="plugin/highlight/highlight.js"></script>
+  <script>
+    // More info about initialization & config:
+    // - https://revealjs.com/initialization/
+    // - https://revealjs.com/config/
+    Reveal.initialize({
+      hash: true,
+      //totalTime: 120,
+
+      // Learn about plugins: https://revealjs.com/plugins/
+      plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+    });
+  </script>
+</body>
+
+</html>

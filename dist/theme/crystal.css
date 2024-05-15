@@ -31,7 +31,7 @@ section.has-light-background, section.has-light-background h1, section.has-light
   --r-heading3-size: 1.1em;
   --r-heading4-size: 1em;
   --r-code-font: monospace;
-  --r-link-color: #42affa;
+  --r-link-color: #d8d8d8;
   --r-link-color-dark: #068de9;
   --r-link-color-hover: #8dcffc;
   --r-selection-background-color: rgba(66, 175, 250, 0.75);
@@ -109,6 +109,14 @@ section.has-light-background, section.has-light-background h1, section.has-light
 
 .reveal h1 {
   text-shadow: var(--r-heading1-text-shadow);
+}
+
+.reveal hgroup h1,
+.reveal hgroup h2,
+.reveal hgroup h3,
+.reveal hgroup h4,
+.reveal hgroup h5 {
+  text-align: left;
 }
 
 /*********************************************
@@ -233,6 +241,12 @@ section.has-light-background, section.has-light-background h1, section.has-light
   word-wrap: normal;
 }
 
+.reveal :not(pre) > code {
+  background: #272822;
+  padding-inline: .2em;
+  box-shadow: 0px 0px 2px rgba(255, 255, 255, 0.3);
+}
+
 .reveal .code-wrapper {
   white-space: normal;
 }
@@ -304,11 +318,16 @@ section.has-light-background, section.has-light-background h1, section.has-light
 .reveal a {
   color: var(--r-link-color);
   text-decoration: none;
+  text-underline-offset: .13em;
+  text-decoration-line: underline;
+  text-decoration-thickness: clamp(1.8px,.04em,4px);
+  text-decoration-color: #a8a8a8;
   transition: color 0.15s ease;
 }
 
 .reveal a:hover {
-  color: var(--r-link-color-hover);
+  color: inherit;
+  text-decoration-color: currentColor;
   text-shadow: none;
   border: none;
 }
