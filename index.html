@@ -215,7 +215,7 @@ Hello, Crystal!
 
       <section data-auto-animate>
         <h2>Static Typing</h2>
-        <p>formal verification</p>
+        <p>type safety</p>
         <p>feels dynamic</p>
         <pre data-id="code-animation"><code class="language-crystal">def add(a, b)
   a + b
@@ -226,7 +226,6 @@ add "foo", "bar" => "foobar"</code></pre>
 
         <aside class="notes">
           <ul>
-            <li>formal verification</li>
             <li>statically typed, but feels dynamic through type inference</li>
             <li>Compiler realizes there are two instantiations of `#add`, one with both parameters being integers, one with both being string</li>
             <li>explicit typing is rarely necessary and in most places automatically inferred</li>
@@ -269,6 +268,9 @@ add "foo", 2 # Error: instantiating 'add(String, Int32)
 
 ary.class # => Array(Int32)
 
+ary << 4
+puts ary[0]
+
 ary << "foo" # Error: expected argument #1 to 'Array(Int32)#<<'
              # to be Int32, not String
 </code></pre>
@@ -285,6 +287,9 @@ ary << "foo" # Error: expected argument #1 to 'Array(Int32)#<<'
 <pre data-id="code-animation2"><code class="language-crystal">ary = [1, 2, 3] of Int32 | String
 
 ary.class # => Array(Int32 | String)
+
+ary << 4
+puts ary[0]
 
 ary << "foo"
 
