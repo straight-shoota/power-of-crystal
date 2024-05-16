@@ -78,7 +78,7 @@
 
       <section>
         <h2>Manas.Tech</h2>
-        <a href="https://manas.tech/"><img src="assets/manas.svg" alt="Manas" style="width: 40%; aspect-ratio: 1;"></a>
+        <a href="https://manas.tech/"><img src="assets/manas.svg" alt="Manas" style="width: 33%; aspect-ratio: 1;"></a>
 
         <aside class="notes">
           <ul>
@@ -110,18 +110,22 @@
 
       <section>
         <div>
-          <p style="text-wrap: balance;">Matz (1993): <em>“What's does a really good programming language look
+          <p style="text-wrap: balance;">Matz (1993): <em>“What would a <strong>really good</strong> programming language look
               like?”</em></p>
 
-          <code class="language-crystal">puts <span class="hljs-string">"Hello, Ruby!"</span></code></pre>
+          <p class="fragment">
+            <code class="language-crystal">puts <span class="hljs-string">"Hello, Ruby!"</span></code>
+          </p>
         </div>
         <div class="fragment">
           <hr>
           <p style="text-wrap: balance;">Ary (2011): <em>“What if Matz's good programming language could
               somehow statically compile?”</em></p>
-
-          <code class="language-crystal">puts <span class="hljs-string">"Hello, Crystal!"</span></code></pre>
         </div>
+
+        <p class="fragment">
+          <code class="language-crystal">puts <span class="hljs-string">"Hello, Crystal!"</span></code>
+        </p>
 
         <aside class="notes">
           <ul>
@@ -214,6 +218,7 @@ Hello, Crystal!
       </section>
 
       <section>
+      <section>
         <h2>Batteries included</h2>
 <pre><code class="language-crystal"># A very basic HTTP server
 require "http/server"
@@ -238,6 +243,25 @@ server.listen
             <li>the last call blocks until the process is terminated</li>
           </ul>
         </aside>
+      </section>
+
+      <section>
+<pre><code class="language-console" data-trim>
+$ crystal build --release src/http-server.cr
+
+$ ./http-server &
+
+$ wrk -t8 -c400 -d60s http://localhost:8080/
+Running 1m test @ http://localhost:8080/
+  8 threads and 400 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency     7.11ms    1.09ms  17.66ms   79.34%
+    Req/Sec     7.07k     1.15k   62.53k    85.64%
+  3373196 requests in 1.00m, 334.56MB read
+Requests/sec:  56126.81
+Transfer/sec:      5.57MB
+</code></pre>
+      </section>
       </section>
 
       <section data-auto-animate>
@@ -300,7 +324,7 @@ add "foo", 2 # Error: instantiating 'add(String, Int32)
 ary.class # => Array(Int32)
 
 ary << 4
-puts ary[0]
+typeof(ary[0]) # Int32
 
 ary << "foo" # Error: expected argument #1 to 'Array(Int32)#<<'
              # to be Int32, not String
@@ -321,7 +345,7 @@ ary << "foo" # Error: expected argument #1 to 'Array(Int32)#<<'
 ary.class # => Array(Int32 | String)
 
 ary << 4
-puts ary[0]
+typeof(ary[0]) # Int32 | String
 
 ary << "foo"
 
@@ -365,16 +389,16 @@ end
       <section>
       <section>
         <h2>Compilation</h2>
-<pre><code class="language-console" style="white-space: pre-wrap;">$ crystal build src/hello-world.cr
+<pre><code class="language-console" style="white-space: pre-wrap;">$ crystal build src/hello.crb
 
-$ ls -sh hello-world
-1,9M hello-world
+$ ls -sh hello
+2,0M hello-world
 
-$ file hello-world
-hello-world: ELF 64-bit LSB pie executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /home/linuxbrew/.linuxbrew/lib/ld.so, for GNU/Linux 3.2.0, with debug_info, not stripped
+$ file hello
+hello: ELF 64-bit LSB pie executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, BuildID[sha1]=d7768fdb368d11e8e08c9bcaea7cc1a629914f04, for GNU/Linux 3.2.0, with debug_info, not stripped
 
-$ ./hello-world
-Hello, World!
+$ ./hello
+Hello, Crystal!
 </code></pre>
 
         <aside class="notes">
@@ -494,7 +518,7 @@ end
         <h2>API gotchas</h2>
 
         <ul>
-          <li class="fragment"><code>#includes?</code> instead of <code>#include?</code></li>
+          <li class="fragment" data-fragment-index="1"><code>#includes?</code> instead of <code>#include?</code></li>
 
           <li class="fragment" data-fragment-index="2">Only <code>#reduce</code>, no <code>#inject</code></li>
           <li class="fragment" data-fragment-index="2">Only <code>#size</code>, no <code>#length</code></li>
@@ -663,7 +687,13 @@ end
       </section>
 
       <section>
+        <h2>Thank you</h2>
 
+        <div style="display: flex; gap: 5%; justify-content: center;">
+          <a href="https://84codes.com" style="width: 20%; aspect-ratio: 1;"  ><img src="assets/84codes.svg" alt="84codes"></a>
+
+          <a href="https://manas.tech/" style="width: 20%; aspect-ratio: 1;"><img src="assets/manas.svg" style="width: 100%;" alt="Manas"></a>
+        </div>
       </section>
     </div>
   </div>
@@ -678,10 +708,13 @@ end
     // - https://revealjs.com/config/
     Reveal.initialize({
       hash: true,
-      //totalTime: 120,
+      // totalTime: 1800,
 
       // Learn about plugins: https://revealjs.com/plugins/
-      plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+      plugins: [RevealMarkdown, RevealHighlight, RevealNotes],
+
+      slideNumber: "c/t",
+      showSlideNumber: "speaker",
     });
   </script>
 </body>
