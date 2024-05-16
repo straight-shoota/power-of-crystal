@@ -1,0 +1,3 @@
+LANGUAGE = Array.to_s == "Array(T)" ? "Crystal" : "Ruby"
+
+puts "Hello, #{LANGUAGE}!"
