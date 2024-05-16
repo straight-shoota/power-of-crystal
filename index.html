@@ -213,6 +213,33 @@ Hello, Crystal!
         </aside>
       </section>
 
+      <section>
+        <h2>Batteries included</h2>
+<pre><code class="language-crystal"># A very basic HTTP server
+require "http/server"
+
+server = HTTP::Server.new do |context|
+  context.response.content_type = "text/plain"
+  context.response.print "Hello, Crystal!"
+end
+
+address = server.bind_tcp(8080)
+puts "Listening on http://#{address}"
+
+server.listen
+</code></pre>
+
+        <aside class="notes">
+          <ul>
+            <li>This could be a Ruby program, right? Just using some `HTTP` library</li>
+            <li><code>http/server</code> is part of Crystal's standard library</li>
+            <li>Crystal comes with a lot of useful tools out of the box</li>
+            <li>requests are handled in individual fibers, enabling concurrency (not that useful if you just print hello Crystalm but imagine bigger)</li>
+            <li>the last call blocks until the process is terminated</li>
+          </ul>
+        </aside>
+      </section>
+
       <section data-auto-animate>
         <h2>Static Typing</h2>
         <p>type safety</p>
@@ -281,6 +308,7 @@ ary << "foo" # Error: expected argument #1 to 'Array(Int32)#<<'
         </aside>
       </section>
 
+      <section>
       <section data-auto-animate>
         <h2>Static Typing</h2>
 
@@ -310,8 +338,8 @@ ary << "foo"
         # or
         Array(String).new
         </code></pre>
-
       </section>
+    </section>
 
       <section>
         <h2>Static Typing</h2>
@@ -331,6 +359,7 @@ end
       </section>
 
       <section>
+      <section>
         <h2>Compilation</h2>
 <pre><code class="language-console" style="white-space: pre-wrap;">$ crystal build src/hello-world.cr
 
@@ -346,11 +375,14 @@ Hello, World!
 
         <aside class="notes">
           <ul>
-            <li>Compile first</li>
+            <li>Compile first, then run: Extra step, takes some time, but runtime efficiency pays off</li>
             <li>Result is a dynamically linked executable for my current system</li>
             <li>link some shared system libraries but no Crystal code</li>
             <li>distribution of binaries is easy, binaries include the language runtime (especially when linked statically)</li>
             <li>cross compilation is also possible</li>
+            <li>LLVM is used for codegen by other languages as well (Rust for example, or clang)</li>
+            <li>optimizations are sometimes ridiculously good</li>
+            <li>All code needs to be fixed at compile time. There’s no `eval` or `send`. Cannot modify program at runtime. Core feature of Ruby's dynamicness.</li>
           </ul>
         </aside>
       </section>
@@ -362,14 +394,7 @@ Hello, World!
           <li>LLVM backend generates efficient code</li>
           <li>limited dynamic language features</li>
         </ul>
-        <aside class="notes">
-          <ul>
-            <li>Extra step, takes some time, but runtime efficiency pays off</li>
-            <li>LLVM is used for codegen by other languages as well (Rust for example, or clang)</li>
-            <li>optimizations are sometimes ridiculously good</li>
-            <li>All code needs to be fixed at compile time. There’s no `eval` or `send`. Cannot modify program at runtime. Core feature of Ruby's dynamicness.</li>
-          </ul>
-        </aside>
+      </section>
       </section>
 
       <section data-auto-animate>
@@ -460,6 +485,31 @@ end
         </section>
       </section>
 
+    <section>
+      <section>
+        <h2>API gotchas</h2>
+
+        <ul>
+          <li class="fragment"><code>#includes?</code> instead of <code>#include?</code></li>
+
+          <li class="fragment" data-fragment-index="2">only <code>#reduce</code>, no <code>#inject</code></li>
+          <li class="fragment" data-fragment-index="2">only <code>#size</code>, no <code>#length</code></li>
+
+        <!--div class="fragment">
+          <p><code>Time.utc</code>/<code>Time.local</code> instead of <code>Time.now</code></p>
+        </div-->
+        </ul>
+
+        <aside class="notes">
+          <p>Overall, the standard library has very many similarities</p>
+          <p>but there are some explicit choices</p>
+          <p>better grammar</p>
+          <p>avoid aliases</p>
+          <p>Easier for newcomers</p>
+          <p>No need to learn two things when one suffices</p>
+        </aside>
+      </section>
+
       <section>
         <h2>Concurrency</h2>
         <ul>
@@ -478,57 +528,6 @@ end
             <li>basically every time you need to wait on something (like reading from a socket), the scheduler
               just continues running another fiber and the current one wakes up when its ready to continue.</li>
             <li>multi-threading is still experimental, but expected to be completed within the next couple of months</li>
-          </ul>
-        </aside>
-      </section>
-
-      <section>
-        <h2>API gotchas</h2>
-
-        <ul>
-          <li><code>#includes?</code> instead of <code>#include?</code></li>
-
-          <li class="fragment" data-fragment-index="1">only <code>#reduce</code>, no <code>#inject</code></li>
-          <li class="fragment" data-fragment-index="1">only <code>#size</code>, no <code>#length</code></li>
-
-        <!--div class="fragment">
-          <p><code>Time.utc</code>/<code>Time.local</code> instead of <code>Time.now</code></p>
-        </div-->
-        </ul>
-
-        <aside class="notes">
-          <p>Overall, the standard library has very many similarities</p>
-          <p>but there are some explicit choices</p>
-          <p>better grammar</p>
-          <p>avoid aliases</p>
-          <p>Easier for newcomers</p>
-          <p>No need to learn two things when one suffices</p>
-        </aside>
-      </section>
-
-      <section>
-        <h2>Batteries included</h2>
-<pre><code class="language-crystal"># A very basic HTTP server
-require "http/server"
-
-server = HTTP::Server.new do |context|
-  context.response.content_type = "text/plain"
-  context.response.print "Hello, Crystal!"
-end
-
-address = server.bind_tcp(8080)
-puts "Listening on http://#{address}"
-
-server.listen
-</code></pre>
-
-        <aside class="notes">
-          <ul>
-            <li>This could be a Ruby program, right? Just using some `HTTP` library</li>
-            <li><code>http/server</code> is part of Crystal's standard library</li>
-            <li>Crystal comes with a lot of useful tools out of the box</li>
-            <li>requests are handled in individual fibers, enabling concurrency (not that useful if you just print hello Crystalm but imagine bigger)</li>
-            <li>the last call blocks until the process is terminated</li>
           </ul>
         </aside>
       </section>
@@ -554,6 +553,7 @@ $ shards update
           <p>dependencies point to repositories</p>
         </aside>
       </section>
+    </section>
 
       <section>
         <h2>Ruby with Crystal</h2>
@@ -651,20 +651,14 @@ end
         <h2>Conclusion</h2>
         <ul>
           <li>Crystal can be a useful asset in your toolbox</li>
-          <li>enhance or replace Ruby and/or other languages (to keep closer to Ruby)</li>
-          <li>Knowing Ruby makes you already a Crystal developer</li>
+          <li>enhance Ruby and replace other languages</li>
+          <li>Knowing Ruby makes you already close to a Crystal developer</li>
           <li>Knowing Crystal makes you a better Ruby developer</li>
         </ul>
       </section>
 
       <section>
-        <p>It takes the fun, elegance and productiveness of Ruby and adds efficiency and type safety.</p>
 
-        <div class="fragment">
-          <p><code>crystal tool format</code></p>
-        </div>
-        <p>formatter is very basic, only cosmetic changes</p>
-        <p>Avoid irrelevant discussions about stylistic details</p>
       </section>
     </div>
   </div>
