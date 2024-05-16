@@ -48,7 +48,7 @@
       <section data-background-color="black">
         <img src="assets/qrcode-url.svg" alt="qr code" style="float: right; background: white; width: 30%; aspect-ratio: 1;">
 
-        <p>Johannes Müller<br>Crystal Core Team</p>
+        <p>Johannes Müller<br>Manas.Tech</p>
 
         <p><a href="mailto:jmuller@manas.tech">jmuller@manas.tech</a></p>
         <p><a href="https://fosstodon.org/@straight-shoota">@straight-shoota</a></p>
@@ -77,7 +77,7 @@
       </section>
 
       <section>
-        <h2>Manas</h2>
+        <h2>Manas.Tech</h2>
         <a href="https://manas.tech/"><img src="assets/manas.svg" alt="Manas" style="width: 40%; aspect-ratio: 1;"></a>
 
         <aside class="notes">
@@ -94,9 +94,9 @@
         <div>
           <h2>Benefits of Ruby</h2>
           <ul>
-            <li>user-friendly syntax</li>
-            <li>versatile and productive</li>
-            <li>simple and intuitive</li>
+            <li>User-friendly syntax</li>
+            <li>Versatile and productive</li>
+            <li>Simple and intuitive</li>
           </ul>
         </div>
 
@@ -146,10 +146,10 @@
         <div>
           <h2>Ruby Drawbacks</h2>
           <ul>
-          <li>type checking</li>
-          <li>raw performance</li>
-          <li>software distribution</li>
-          <li>concurrency</li>
+          <li>Type checking</li>
+          <li>Raw performance</li>
+          <li>Software distribution</li>
+          <li>Concurrency</li>
         </ul>
         </div>
 
@@ -170,10 +170,10 @@
       <section>
         <h2>Crystal's answers</h2>
         <ul>
-          <li>goodies from Ruby's lineage</li>
-          <li>static typing with type inference</li>
-          <li>compiles to highly efficient machine code</li>
-          <li>strong, intuitive concurrency model</li>
+          <li>Goodies from Ruby's lineage</li>
+          <li>Static typing with type inference</li>
+          <li>Compiles to highly efficient machine code</li>
+          <li>Strong, intuitive concurrency model</li>
         </ul>
 
         <aside class="notes">
@@ -242,8 +242,10 @@ server.listen
 
       <section data-auto-animate>
         <h2>Static Typing</h2>
-        <p>type safety</p>
-        <p>feels dynamic</p>
+        <ul>
+          <li>Type safety</li>
+          <li>Feels dynamic</li>
+        </ul>
         <pre data-id="code-animation"><code class="language-crystal">def add(a, b)
   a + b
 end
@@ -263,8 +265,10 @@ add "foo", "bar" => "foobar"</code></pre>
 
       <section data-auto-animate>
         <h2>Static Typing</h2>
-        <p>type safety</p>
-        <p>feels dynamic</p>
+        <ul>
+          <li>Type safety</li>
+          <li>Feels dynamic</li>
+        </ul>
         <pre data-id="code-animation"><code class="language-crystal">def add(a, b)
   a + b
 end
@@ -390,16 +394,16 @@ Hello, World!
       <section>
         <h2>Compilation</h2>
         <ul>
-          <li>runtime is embedded into the binary</li>
+          <li>Runtime is embedded into the binary</li>
           <li>LLVM backend generates efficient code</li>
-          <li>limited dynamic language features</li>
+          <li>Limited dynamic language features</li>
         </ul>
       </section>
       </section>
 
       <section data-auto-animate>
         <h2>Metaprogramming: <code>macro</code></h2>
-        <p>code that writes other code at compile time</p>
+        <p>Code that writes other code at compile time</p>
         <div class="r-stack">
 <pre class="fragment"><code class="language-crystal">macro getter(var)
 
@@ -433,7 +437,7 @@ getter foo
       <section>
         <section data-auto-animate>
           <h2>Metaprogramming: <code>macro</code></h2>
-          <p>code that writes other code at compile time</p>
+          <p>Code that writes other code at compile time</p>
           <div class="r-stack">
 <pre><code class="language-crystal">macro getter(var)
   def {{ var.id }}
@@ -492,8 +496,8 @@ end
         <ul>
           <li class="fragment"><code>#includes?</code> instead of <code>#include?</code></li>
 
-          <li class="fragment" data-fragment-index="2">only <code>#reduce</code>, no <code>#inject</code></li>
-          <li class="fragment" data-fragment-index="2">only <code>#size</code>, no <code>#length</code></li>
+          <li class="fragment" data-fragment-index="2">Only <code>#reduce</code>, no <code>#inject</code></li>
+          <li class="fragment" data-fragment-index="2">Only <code>#size</code>, no <code>#length</code></li>
 
         <!--div class="fragment">
           <p><code>Time.utc</code>/<code>Time.local</code> instead of <code>Time.now</code></p>
@@ -513,11 +517,11 @@ end
       <section>
         <h2>Concurrency</h2>
         <ul>
-          <li>lightweight threads, CSP-style</li>
+          <li>Lightweight threads, CSP-style</li>
           <li><code>spawn foo()</code> launches a <code>Fiber</code></li>
-          <li>deeply integrated into the runtime</li>
+          <li>Deeply integrated into the runtime</li>
           <li><code>socket.puts "ping"</code></li>
-          <li>communication via <code>Channel</code></li>
+          <li>Communication via <code>Channel</code></li>
         </ul>
 
         <aside class="notes">
@@ -578,7 +582,7 @@ MyTestModule.add(1, 2) # => 3
 
       <section>
         <h2>Crystal with Ruby</h2>
-        <p>mruby interpreter with simple bindings</p>
+        <p>Embed an mruby interpreter in Crystal</p>
 
         <pre><code class="language-crystal" data-trim>require "anyolite"
 
@@ -599,6 +603,7 @@ end
 
         <aside class="notes">
           <p>Other forms of collaboration</p>
+          <p>Crystal is as good as other alternatives (Rust, Go, Zig, C ...)</p>
           <p>let Crystal handle performance-critical jobs</p>
           <p>bg-jobs via sidekiq adapter etc.</p>
           <p>e.g. websocket server, streaming server</p>
@@ -632,7 +637,7 @@ end
         <h2>Learnings for Rubyists</h2>
         <ul>
           <li>prefer shaped types for structured data over shapeless hashes</li>
-          <li>more efficient, explicitly structured, allows documentation</li>
+          <li>more efficient, explicitly structured, descriptive</li>
           <li>for static key names, use a type</li>
         </ul>
       </section>
@@ -651,7 +656,7 @@ end
         <h2>Conclusion</h2>
         <ul>
           <li>Crystal can be a useful asset in your toolbox</li>
-          <li>enhance Ruby and replace other languages</li>
+          <li>Enhance your Ruby prject</li>
           <li>Knowing Ruby makes you already close to a Crystal developer</li>
           <li>Knowing Crystal makes you a better Ruby developer</li>
         </ul>
