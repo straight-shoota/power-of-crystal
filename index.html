@@ -659,11 +659,24 @@ end
 
       <section>
         <h2>Learnings for Rubyists</h2>
-        <ul>
-          <li>prefer shaped types for structured data over shapeless hashes</li>
-          <li>more efficient, explicitly structured, descriptive</li>
-          <li>for static key names, use a type</li>
-        </ul>
+<pre><code class="language-ruby">
+{
+  "action" => "foo",
+  "credentials" => {
+    "id" => "abc",
+    "secret" => "psst"
+  },
+  "value" => 12,
+}
+</code></pre>
+        <aside class="notes">
+          <ul>
+            <li>In Ruby there's often a tendency to put semi-structured data into shapeless hashes</li>
+            <li>This is problematic in Crystal due to static typing</li>
+            <li>explicitly structured types are more efficient, descriptive</li>
+            <li>for static key names, use a type</li>
+          </ul>
+        </aside>
       </section>
 
       <section>
@@ -680,7 +693,7 @@ end
         <h2>Conclusion</h2>
         <ul>
           <li>Crystal can be a useful asset in your toolbox</li>
-          <li>Enhance your Ruby prject</li>
+          <li>Enhance your Ruby project</li>
           <li>Knowing Ruby makes you already close to a Crystal developer</li>
           <li>Knowing Crystal makes you a better Ruby developer</li>
         </ul>
